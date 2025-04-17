@@ -1,5 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, useWindowDimensions} from 'react-native';
 import React from 'react';
+import { isSmallDevice } from './screenWidth';
 type Props={
   text:string
   onPress?: ()=> void
@@ -10,6 +11,9 @@ type Props={
 
 const MyButton = ({text,onPress, variant = 'primary'}:Props) => {
   let backgroundColor = 'dodgerblue';
+
+  const {width} = useWindowDimensions();
+
   switch (variant) {
     case 'primary':
       backgroundColor = 'dodgerblue';
@@ -30,7 +34,7 @@ const MyButton = ({text,onPress, variant = 'primary'}:Props) => {
   }
   return (
     <TouchableOpacity onPress={onPress} style={[styles.container, {backgroundColor:backgroundColor}]}>
-      <Text style={styles.text}>{text}  </Text>
+      <Text style={[styles.text, {fontSize:isSmallDevice(width) ? 36: 42 }]}>{text}  </Text>
     </TouchableOpacity>
   );
 };
@@ -51,7 +55,6 @@ const styles = StyleSheet.create({
 
     },
     text:{
-        fontSize:45,
         color:'white',
         textAlign:'center',
     },
